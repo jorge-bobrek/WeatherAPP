@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct WeatherAPIApp: App {
+    @StateObject var favoritesStore = FavoritesStore()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(favoritesStore)
         }
     }
 }

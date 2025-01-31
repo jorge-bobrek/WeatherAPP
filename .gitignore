@@ -1,0 +1,10 @@
+# Xcode files
+.DS_Store
+*.xcuserstate
+*.xcuserdata
+*.xcodeproj
+*.xcworkspace
+*.xcbkptlist
+build/
+DerivedData/
+/WeatherAPI.xcodeproj/xcuserdata/jorgebobrek.xcuserdatad/xcdebugger
