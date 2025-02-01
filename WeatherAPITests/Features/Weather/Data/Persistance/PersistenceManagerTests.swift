@@ -21,11 +21,9 @@ final class PersistenceManagerTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Fetch Favorites
-
     func testFetchFavoritesSuccess() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         do {
             try await persistenceManager.addFavorite(location)
         } catch {
@@ -56,11 +54,9 @@ final class PersistenceManagerTests: XCTestCase {
         }
     }
 
-    // MARK: - Add Favorite
-
     func testAddFavoriteSuccess() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
 
         // Act
         do {
@@ -76,7 +72,7 @@ final class PersistenceManagerTests: XCTestCase {
 
     func testAddFavoriteDuplicate() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
 
         // Act
         do {
@@ -93,11 +89,9 @@ final class PersistenceManagerTests: XCTestCase {
         }
     }
 
-    // MARK: - Remove Favorite
-
     func testRemoveFavoriteSuccess() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         do {
             try await persistenceManager.addFavorite(location)
         } catch {
@@ -118,7 +112,7 @@ final class PersistenceManagerTests: XCTestCase {
 
     func testRemoveFavoriteNonExistent() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
 
         // Act
         do {

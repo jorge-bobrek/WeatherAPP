@@ -46,8 +46,8 @@ final class FavoritesStoreTests: XCTestCase {
     func testFetchFavoritesSuccess() async {
         // Arrange
         let expectedFavorites = [
-            LocationModel(id: 1, name: "London", country: "UK"),
-            LocationModel(id: 2, name: "Paris", country: "France")
+            LocationModel(id: 1, name: "London", country: "United Kingdom"),
+            LocationModel(id: 2, name: "Cucuta", country: "Colombia")
         ]
         mockFetchFavoritesUseCase.fetchFavoritesResult = .success(expectedFavorites)
 
@@ -76,7 +76,7 @@ final class FavoritesStoreTests: XCTestCase {
 
     func testToggleFavoriteAddSuccess() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
 
         // Act
         await store.toggleFavorite(location)
@@ -89,7 +89,7 @@ final class FavoritesStoreTests: XCTestCase {
 
     func testToggleFavoriteRemoveSuccess() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         store.favorites = [location]
 
         // Act
@@ -103,7 +103,7 @@ final class FavoritesStoreTests: XCTestCase {
 
     func testToggleFavoriteAddFailure() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         let expectedError = NSError(domain: "TestError", code: 500, userInfo: nil)
         mockAddFavoriteUseCase.addFavoriteResult = .failure(expectedError)
 
@@ -118,7 +118,7 @@ final class FavoritesStoreTests: XCTestCase {
 
     func testToggleFavoriteRemoveFailure() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         store.favorites = [location]
         let expectedError = NSError(domain: "TestError", code: 500, userInfo: nil)
         mockRemoveFavoriteUseCase.removeFavoriteResult = .failure(expectedError)
@@ -134,7 +134,7 @@ final class FavoritesStoreTests: XCTestCase {
 
     func testToggleFavoriteAddDuplicate() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         store.favorites = [location]
 
         // Act
@@ -148,7 +148,7 @@ final class FavoritesStoreTests: XCTestCase {
 
     func testIsFavorite() {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         store.favorites = [location]
 
         // Act & Assert
@@ -157,7 +157,7 @@ final class FavoritesStoreTests: XCTestCase {
 
     func testIsNotFavorite() {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
 
         // Act & Assert
         XCTAssertFalse(store.isFavorite(location), "The location should not be a favorite.")

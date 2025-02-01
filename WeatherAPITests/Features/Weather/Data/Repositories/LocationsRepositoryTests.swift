@@ -24,13 +24,11 @@ final class LocationsRepositoryTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Success Scenario
-
     func testFetchLocationsSuccess() async throws {
         // Arrange
         let expectedLocations = [
-            LocationModel(id: 1, name: "London", country: "UK"),
-            LocationModel(id: 2, name: "Paris", country: "France")
+            LocationModel(id: 1, name: "London", country: "United Kingdom"),
+            LocationModel(id: 2, name: "Cucuta", country: "Colombia")
         ]
         mockNetworkService.fetchDataResult = .success(expectedLocations)
 

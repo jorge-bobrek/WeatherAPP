@@ -24,19 +24,17 @@ final class ForecastRepositoryTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Success Scenario
-
     func testFetchForecastSuccess() async throws {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         let expectedForecast = WeatherModel(
             forecast: WeatherForecastModel(
                 forecastday: [
                     WeatherForecastDayModel(
                         date: "2023-10-01",
                         day: ForecastDayModel(
-                            avgTempC: 15.0,
-                            condition: WeatherConditionModel(text: "Sunny", icon: "sunny.png")
+                            avgtempC: 15.0,
+                            condition: WeatherConditionModel(text: "Sunny", icon: "//example.com/sunny.png")
                         )
                     )
                 ]
@@ -54,11 +52,9 @@ final class ForecastRepositoryTests: XCTestCase {
         XCTAssertEqual(result, expectedForecast, "The returned forecast should match the expected forecast.")
     }
 
-    // MARK: - Failure Scenarios
-
     func testFetchForecastNetworkError() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         let expectedError = NetworkError.invalidURL(urlString: "invalid-url")
         mockNetworkService.fetchDataResult = .failure(expectedError)
 
@@ -73,7 +69,7 @@ final class ForecastRepositoryTests: XCTestCase {
 
     func testFetchForecastInvalidStatusCode() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         let expectedError = NetworkError.httpError(statusCode: 404, message: "Not Found")
         mockNetworkService.fetchDataResult = .failure(expectedError)
 
@@ -88,7 +84,7 @@ final class ForecastRepositoryTests: XCTestCase {
 
     func testFetchForecastDecodingError() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         let expectedError = NetworkError.decodingFailed(type: String(describing: WeatherModel.self), innerError: DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Invalid data")))
         mockNetworkService.fetchDataResult = .failure(expectedError)
 

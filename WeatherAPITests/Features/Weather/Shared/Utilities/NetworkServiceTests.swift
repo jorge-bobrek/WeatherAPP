@@ -29,11 +29,9 @@ final class NetworkServiceTests: XCTestCase {
         let expectedData = WeatherModel(forecast: WeatherForecastModel(forecastday: []))
         mockNetworkService.fetchDataResult = .success(expectedData)
 
-        // Act
+        // Act & Assert
         do {
             let result: WeatherModel = try await mockNetworkService.fetchData(endpoint: "forecast", queryParams: [:])
-
-            // Assert
             XCTAssertEqual(result, expectedData, "The fetched data should match the expected data.")
         } catch {
             XCTFail("Fetching data should not fail: \(error)")
@@ -47,12 +45,11 @@ final class NetworkServiceTests: XCTestCase {
         let mockNetworkService = MockNetworkService()
         mockNetworkService.fetchDataResult = .failure(NetworkError.invalidURL(urlString: "invalid-url"))
 
-        // Act
+        // Act & Assert
         do {
             let _: WeatherModel = try await mockNetworkService.fetchData(endpoint: "forecast", queryParams: [:])
             XCTFail("Fetching data should fail with an invalid URL.")
         } catch let error as NetworkError {
-            // Assert
             XCTAssertEqual(error, NetworkError.invalidURL(urlString: "invalid-url"), "The error should be invalidURL.")
         } catch {
             XCTFail("Unexpected error: \(error)")
@@ -65,12 +62,11 @@ final class NetworkServiceTests: XCTestCase {
         let decodingError = DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Invalid data"))
         mockNetworkService.fetchDataResult = .failure(NetworkError.decodingFailed(type: "WeatherModel", innerError: decodingError))
 
-        // Act
+        // Act & Assert
         do {
             let _: WeatherModel = try await mockNetworkService.fetchData(endpoint: "forecast", queryParams: [:])
             XCTFail("Fetching data should fail with a decoding error.")
         } catch let error as NetworkError {
-            // Assert
             XCTAssertEqual(error, NetworkError.decodingFailed(type: "WeatherModel", innerError: decodingError), "The error should be decodingFailed.")
         } catch {
             XCTFail("Unexpected error: \(error)")
@@ -82,12 +78,11 @@ final class NetworkServiceTests: XCTestCase {
         let mockNetworkService = MockNetworkService()
         mockNetworkService.fetchDataResult = .failure(NetworkError.noInternetConnection)
 
-        // Act
+        // Act & Assert
         do {
             let _: WeatherModel = try await mockNetworkService.fetchData(endpoint: "forecast", queryParams: [:])
             XCTFail("Fetching data should fail with no internet connection.")
         } catch let error as NetworkError {
-            // Assert
             XCTAssertEqual(error, NetworkError.noInternetConnection, "The error should be noInternetConnection.")
         } catch {
             XCTFail("Unexpected error: \(error)")

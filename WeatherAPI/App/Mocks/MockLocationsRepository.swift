@@ -7,8 +7,8 @@
 
 class MockLocationsRepository: AnyLocationsRepository {
     var locations: [LocationModel] = [
-        LocationModel(id: 1, name: "London", country: "UK"),
-        LocationModel(id: 2, name: "Paris", country: "FR")
+        LocationModel(id: 1, name: "London", country: "United Kingdom"),
+        LocationModel(id: 2, name: "Cucuta", country: "Colombia")
     ]
     var shouldThrowError = false
 

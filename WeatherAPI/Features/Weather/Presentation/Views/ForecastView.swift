@@ -25,7 +25,7 @@ struct ForecastView: View {
                     VStack {
                         Text(DateUtils.formatDateString(forecast.date))
                             .font(.headline)
-                        Text(String(format: "%.1f°C", forecast.day.avgTempC))
+                        Text(String(format: "%.1f°C", forecast.day.avgtempC))
                             .font(.title)
                         KFImage(URL(string: forecast.day.condition.icon)!)
                             .resizable()

@@ -5,7 +5,6 @@
 //  Created by Jorge Bobrek on 31/01/25.
 //
 
-import Foundation
 @testable import WeatherAPI
 
 final class MockNetworkService: AnyNetworkService {
@@ -24,7 +23,7 @@ final class MockNetworkService: AnyNetworkService {
             if let typedData = data as? T {
                 return typedData
             } else {
-                throw NetworkError.decodingFailed(type: String(describing: T.self), innerError: DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Failed to cast data to expected type")))
+                throw NetworkError.decodingFailed(type: String(describing: T.self), innerError: DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Failed to decode data to expected type")))
             }
         case .failure(let error):
             throw error

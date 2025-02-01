@@ -31,8 +31,8 @@ final class LocationsViewModelTests: XCTestCase {
     func testFetchLocationsSuccess() async {
         // Arrange
         let expectedLocations = [
-            LocationModel(id: 1, name: "London", country: "UK"),
-            LocationModel(id: 2, name: "Paris", country: "France")
+            LocationModel(id: 1, name: "London", country: "United Kingdom"),
+            LocationModel(id: 2, name: "Cucuta", country: "Colombia")
         ]
         mockFetchLocationsUseCase.fetchLocationsResult = .success(expectedLocations)
 

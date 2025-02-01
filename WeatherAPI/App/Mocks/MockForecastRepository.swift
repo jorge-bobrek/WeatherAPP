@@ -13,7 +13,7 @@ final class MockForecastRepository: AnyForecastRepository {
                     WeatherForecastDayModel(
                         date: "01-02-2025",
                         day: ForecastDayModel(
-                            avgTempC: 20.0,
+                            avgtempC: 20.0,
                             condition: WeatherConditionModel(
                                 text: "Sunny",
                                 icon: "//example.com/sunny.png"
@@ -22,7 +22,7 @@ final class MockForecastRepository: AnyForecastRepository {
                     ), WeatherForecastDayModel(
                         date: "02-02-2025",
                         day: ForecastDayModel(
-                            avgTempC: 15.0,
+                            avgtempC: 15.0,
                             condition: WeatherConditionModel(
                                 text: "Cloudy",
                                 icon: "//example.com/cloudy.png"

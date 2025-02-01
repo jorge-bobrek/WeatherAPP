@@ -5,7 +5,6 @@
 //  Created by Jorge Bobrek on 31/01/25.
 //
 
-import Foundation
 @testable import WeatherAPI
 
 final class MockForecastRepository: AnyForecastRepository {

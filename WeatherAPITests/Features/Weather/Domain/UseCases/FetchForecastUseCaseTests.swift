@@ -24,19 +24,17 @@ final class FetchForecastUseCaseTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Success Scenario
-
     func testExecuteFetchForecastSuccess() async throws {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         let expectedForecast = WeatherModel(
             forecast: WeatherForecastModel(
                 forecastday: [
                     WeatherForecastDayModel(
                         date: "2023-10-01",
                         day: ForecastDayModel(
-                            avgTempC: 15.0,
-                            condition: WeatherConditionModel(text: "Sunny", icon: "sunny.png")
+                            avgtempC: 15.0,
+                            condition: WeatherConditionModel(text: "Sunny", icon: "//example.com/sunny.png")
                         )
                     )
                 ]
@@ -54,11 +52,9 @@ final class FetchForecastUseCaseTests: XCTestCase {
         XCTAssertEqual(result, expectedForecast, "The returned forecast should match the expected forecast.")
     }
 
-    // MARK: - Edge Cases
-
     func testExecuteFetchForecastEmptyForecast() async throws {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         let expectedForecast = WeatherModel(forecast: WeatherForecastModel(forecastday: []))
         mockRepository.fetchForecastResult = .success(expectedForecast)
 
@@ -69,11 +65,9 @@ final class FetchForecastUseCaseTests: XCTestCase {
         XCTAssertTrue(result.forecast.forecastday.isEmpty, "The forecast should be empty.")
     }
 
-    // MARK: - Failure Scenarios
-
     func testExecuteFetchForecastFailure() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         let expectedError = NSError(domain: "TestError", code: 500, userInfo: nil)
         mockRepository.fetchForecastResult = .failure(expectedError)
 

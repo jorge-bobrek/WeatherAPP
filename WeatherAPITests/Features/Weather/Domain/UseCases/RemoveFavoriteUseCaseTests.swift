@@ -24,11 +24,9 @@ final class RemoveFavoriteUseCaseTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Success Scenarios
-
     func testExecuteRemoveFavoriteSuccess() async throws {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         mockRepository.favorites = [location]
 
         // Act
@@ -42,8 +40,8 @@ final class RemoveFavoriteUseCaseTests: XCTestCase {
 
     func testExecuteRemoveNonExistentFavorite() async throws {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
-        mockRepository.favorites = [] // Simulate no favorites
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
+        mockRepository.favorites = []
 
         // Act
         try await useCase.execute(location)
@@ -52,15 +50,13 @@ final class RemoveFavoriteUseCaseTests: XCTestCase {
         XCTAssertTrue(mockRepository.favorites.isEmpty, "The favorites list should remain empty.")
     }
 
-    // MARK: - Failure Scenarios
-
     func testExecuteRemoveFavoriteFailure() async {
         // Arrange
         mockRepository.shouldThrowError = true
 
         // Act & Assert
         do {
-            try await useCase.execute(LocationModel(id: 1, name: "London", country: "UK"))
+            try await useCase.execute(LocationModel(id: 1, name: "London", country: "United Kingdom"))
             XCTFail("Expected an error to be thrown, but the use case succeeded.")
         } catch {
             XCTAssertTrue(error is MockError, "The error should be of type MockError.")

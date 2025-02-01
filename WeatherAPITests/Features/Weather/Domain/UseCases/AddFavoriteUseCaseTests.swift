@@ -24,11 +24,9 @@ final class AddFavoriteUseCaseTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Success Scenarios
-
     func testExecuteAddFavoriteSuccess() async throws {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
 
         // Act
         try await useCase.execute(location)
@@ -37,11 +35,9 @@ final class AddFavoriteUseCaseTests: XCTestCase {
         XCTAssertTrue(mockRepository.addedFavorites.contains(location), "The location should be added to favorites.")
     }
 
-    // MARK: - Edge Cases
-
     func testExecuteAddDuplicateFavorite() async throws {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         mockRepository.favorites = [location] // Simulate existing favorite
 
         // Act
@@ -51,15 +47,13 @@ final class AddFavoriteUseCaseTests: XCTestCase {
         XCTAssertEqual(mockRepository.addedFavorites.count, 1, "Duplicate favorite should not be added.")
     }
 
-    // MARK: - Failure Scenarios
-
     func testExecuteAddFavoriteFailure() async {
         // Arrange
         mockRepository.shouldThrowError = true
 
         // Act & Assert
         do {
-            try await useCase.execute(LocationModel(id: 1, name: "London", country: "UK"))
+            try await useCase.execute(LocationModel(id: 1, name: "London", country: "United Kingdom"))
             XCTFail("Expected an error to be thrown, but the use case succeeded.")
         } catch {
             XCTAssertTrue(error is MockError, "The error should be of type MockError.")

@@ -24,13 +24,11 @@ final class FetchFavoritesUseCaseTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Success Scenarios
-
     func testExecuteFetchFavoritesSuccess() async throws {
         // Arrange
         let expectedFavorites = [
-            LocationModel(id: 1, name: "London", country: "UK"),
-            LocationModel(id: 2, name: "Paris", country: "France")
+            LocationModel(id: 1, name: "London", country: "United Kingdom"),
+            LocationModel(id: 2, name: "Cucuta", country: "Colombia")
         ]
         mockRepository.favorites = expectedFavorites
 
@@ -41,11 +39,9 @@ final class FetchFavoritesUseCaseTests: XCTestCase {
         XCTAssertEqual(result, expectedFavorites, "The returned favorites should match the expected favorites.")
     }
 
-    // MARK: - Edge Cases
-
     func testExecuteFetchFavoritesEmptyList() async throws {
         // Arrange
-        mockRepository.favorites = [] // Simulate empty favorites list
+        mockRepository.favorites = []
 
         // Act
         let result = try await useCase.execute()
@@ -53,8 +49,6 @@ final class FetchFavoritesUseCaseTests: XCTestCase {
         // Assert
         XCTAssertTrue(result.isEmpty, "The returned favorites list should be empty.")
     }
-
-    // MARK: - Failure Scenarios
 
     func testExecuteFetchFavoritesFailure() async {
         // Arrange

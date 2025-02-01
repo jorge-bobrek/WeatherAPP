@@ -24,8 +24,6 @@ final class FetchLocationsUseCaseTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Success Scenarios
-
     func testExecuteFetchLocationsSuccess() async throws {
         // Arrange
         let expectedLocations = [
@@ -41,11 +39,9 @@ final class FetchLocationsUseCaseTests: XCTestCase {
         XCTAssertEqual(result, expectedLocations, "The returned locations should match the expected locations.")
     }
 
-    // MARK: - Edge Cases
-
     func testExecuteFetchLocationsEmptyQuery() async throws {
         // Arrange
-        mockRepository.locations = [] // Simulate no results for empty query
+        mockRepository.locations = []
 
         // Act
         let result = try await useCase.execute(query: "")
@@ -56,7 +52,7 @@ final class FetchLocationsUseCaseTests: XCTestCase {
 
     func testExecuteFetchLocationsNoResults() async throws {
         // Arrange
-        mockRepository.locations = [] // Simulate no results for a query
+        mockRepository.locations = []
 
         // Act
         let result = try await useCase.execute(query: "InvalidQuery")
@@ -64,8 +60,6 @@ final class FetchLocationsUseCaseTests: XCTestCase {
         // Assert
         XCTAssertTrue(result.isEmpty, "The returned locations list should be empty for a query with no results.")
     }
-
-    // MARK: - Failure Scenarios
 
     func testExecuteFetchLocationsFailure() async {
         // Arrange

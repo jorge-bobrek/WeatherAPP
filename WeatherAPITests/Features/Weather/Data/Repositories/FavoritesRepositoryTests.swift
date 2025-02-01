@@ -23,14 +23,12 @@ final class FavoritesRepositoryTests: XCTestCase {
         mockPersistenceManager = nil
         super.tearDown()
     }
-
-    // MARK: - Success Scenarios
-
+    
     func testFetchFavoritesSuccess() async throws {
         // Arrange
         let expectedFavorites = [
-            LocationModel(id: 1, name: "London", country: "UK"),
-            LocationModel(id: 2, name: "Paris", country: "France")
+            LocationModel(id: 1, name: "London", country: "United Kingdom"),
+            LocationModel(id: 2, name: "Cucuta", country: "Colombia")
         ]
         mockPersistenceManager.favorites = expectedFavorites
 
@@ -43,7 +41,7 @@ final class FavoritesRepositoryTests: XCTestCase {
 
     func testAddFavoriteSuccess() async throws {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
 
         // Act
         try await repository.addFavorite(location)
@@ -54,7 +52,7 @@ final class FavoritesRepositoryTests: XCTestCase {
 
     func testRemoveFavoriteSuccess() async throws {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         mockPersistenceManager.favorites = [location]
 
         // Act
@@ -64,16 +62,15 @@ final class FavoritesRepositoryTests: XCTestCase {
         XCTAssertFalse(mockPersistenceManager.favorites.contains(location), "The location should be removed from favorites.")
     }
 
-    // MARK: - Failure Scenarios
-
     func testFetchFavoritesFailure() async {
         // Arrange
         mockPersistenceManager.shouldThrowError = true
-        let expectedError = PersistenceError.fetchFailed(description: "TestError")
+        let expectedError = PersistenceError.fetchFailed(description: "FetchFavoritesError")
 
         // Act & Assert
         do {
-            _ = try await repository.fetchFavorites()
+            let favorites = try await repository.fetchFavorites()
+            XCTAssertEqual(favorites.count, 0, "The favorites list should be empty.")
             XCTFail("Expected an error to be thrown, but the repository succeeded.")
         } catch {
             XCTAssertEqual(error as? PersistenceError, expectedError, "The error should match the expected error.")
@@ -82,9 +79,9 @@ final class FavoritesRepositoryTests: XCTestCase {
 
     func testAddFavoriteFailure() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         mockPersistenceManager.shouldThrowError = true
-        let expectedError = PersistenceError.saveFailed(description: "TestError")
+        let expectedError = PersistenceError.saveFailed(description: "AddFavoriteError")
 
         // Act & Assert
         do {
@@ -97,10 +94,10 @@ final class FavoritesRepositoryTests: XCTestCase {
 
     func testRemoveFavoriteFailure() async {
         // Arrange
-        let location = LocationModel(id: 1, name: "London", country: "UK")
+        let location = LocationModel(id: 1, name: "London", country: "United Kingdom")
         mockPersistenceManager.favorites = [location]
         mockPersistenceManager.shouldThrowError = true
-        let expectedError = PersistenceError.saveFailed(description: "TestError")
+        let expectedError = PersistenceError.deleteFailed(description: "RemoveFavoriteError")
 
         // Act & Assert
         do {

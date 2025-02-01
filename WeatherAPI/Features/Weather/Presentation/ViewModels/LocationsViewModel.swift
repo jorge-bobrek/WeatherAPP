@@ -21,15 +21,17 @@ class LocationsViewModel: ObservableObject {
     }
 
     func fetchLocations(query: String) async {
-        isLoading = true
-        error = nil
-        do {
-            let fetchedLocations = try await fetchLocationsUseCase.execute(query: query)
-            locations = fetchedLocations
-        } catch {
-            self.error = error
+        if query.count > 2 {
+            isLoading = true
+            error = nil
+            do {
+                let fetchedLocations = try await fetchLocationsUseCase.execute(query: query)
+                locations = fetchedLocations
+            } catch {
+                self.error = error
+            }
+            isLoading = false
         }
-        isLoading = false
     }
     
 }

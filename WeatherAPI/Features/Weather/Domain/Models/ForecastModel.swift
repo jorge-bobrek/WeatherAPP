@@ -21,13 +21,8 @@ struct WeatherForecastDayModel: Codable, Hashable, Equatable {
 }
 
 struct ForecastDayModel: Codable, Hashable, Equatable {
-    let avgTempC: Double
+    let avgtempC: Double
     let condition: WeatherConditionModel
-
-    private enum CodingKeys: String, CodingKey {
-        case avgTempC = "avgtemp_c"
-        case condition
-    }
 }
 
 struct WeatherConditionModel: Codable, Hashable, Equatable {
