@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var favoritesStore: FavoritesStore
+    @Environment(\.dependencyContainer) private var dependencyContainer
     @State private var selectedTab = 0
 
     var body: some View {
@@ -19,7 +20,7 @@ struct ContentView: View {
             ]) { index in
                 switch index {
                 case 0:
-                    LocationsView(viewModel: LocationsViewModel())
+                    LocationsView(viewModel: dependencyContainer.makeLocationsViewModel())
                 case 1:
                     FavoritesView()
                 default:
@@ -27,13 +28,8 @@ struct ContentView: View {
                 }
             }
             .onAppear {
-                favoritesStore.fetchFavorites()
+                Task { await favoritesStore.fetchFavorites() }
             }
         }
     }
-}
-
-#Preview {
-    ContentView()
-        .environmentObject(FavoritesStore())
 }

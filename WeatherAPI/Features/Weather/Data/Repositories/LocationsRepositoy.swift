@@ -10,13 +10,12 @@ import Foundation
 class LocationsRepository: AnyLocationsRepository {
     private let networkService: AnyNetworkService
     
-    init(networkService: NetworkService = NetworkService.shared) {
+    init(networkService: AnyNetworkService) {
         self.networkService = networkService
     }
     
     func fetchLocations(query: String) async throws -> [LocationModel] {
         let searchQueryParams = ["q": query]
-        return try await networkService.fetchData(endpoint: "/search", queryParams: searchQueryParams
-)
+        return try await networkService.fetchData(endpoint: "/search", queryParams: searchQueryParams)
     }
 }

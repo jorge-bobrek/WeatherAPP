@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LocationListView: View {
     @EnvironmentObject var favoritesStore: FavoritesStore
+    @Environment(\.dependencyContainer) private var dependencyContainer
     @State private var selectedLocation: LocationModel? = nil
     var list: [LocationModel]
     
@@ -28,7 +29,7 @@ struct LocationListView: View {
                             }
                             Spacer()
                             Button {
-                                favoritesStore.toggleFavorite(location)
+                                Task { await favoritesStore.toggleFavorite(location) }
                             } label: {
                                 Image(systemName: favoritesStore.isFavorite(location) ? "star.fill" : "star")
                                     .foregroundColor(.yellow)
@@ -43,7 +44,7 @@ struct LocationListView: View {
             NavigationLink(
                 destination: Group {
                     if let location = selectedLocation {
-                        ForecastView(viewModel: ForecastViewModel(), location: location)
+                        ForecastView(viewModel: dependencyContainer.makeForecastViewModel(), location: location)
                     }
                 },
                 isActive: Binding(

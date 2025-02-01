@@ -8,7 +8,7 @@
 class FetchLocationsUseCase {
     private let repository: AnyLocationsRepository
 
-    init(repository: AnyLocationsRepository = LocationsRepository()) {
+    init(repository: AnyLocationsRepository) {
         self.repository = repository
     }
     

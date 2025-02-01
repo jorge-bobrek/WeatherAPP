@@ -12,45 +12,53 @@ import CoreData
 class FavoritesStore: ObservableObject {
     @Published var favorites: [LocationModel] = []
     @Published var error: Error?
+    @Published var isLoading: Bool = false
     
     private let fetchFavoritesUseCase: FetchFavoritesUseCase
-    private let addFavoritesUseCase: AddFavoritesUseCase
-    private let removeFavoritesUseCase: RemoveFavoritesUseCase
+    private let addFavoriteUseCase: AddFavoriteUseCase
+    private let removeFavoriteUseCase: RemoveFavoriteUseCase
     
-    init(fetchFavoritesUseCase: FetchFavoritesUseCase = FetchFavoritesUseCase(), addFavoritesUseCase: AddFavoritesUseCase = AddFavoritesUseCase(), removeFavoritesUseCase: RemoveFavoritesUseCase = RemoveFavoritesUseCase()) {
+    init(
+        fetchFavoritesUseCase: FetchFavoritesUseCase,
+        addFavoriteUseCase: AddFavoriteUseCase,
+        removeFavoriteUseCase: RemoveFavoriteUseCase
+    ) {
         self.fetchFavoritesUseCase = fetchFavoritesUseCase
-        self.addFavoritesUseCase = addFavoritesUseCase
-        self.removeFavoritesUseCase = removeFavoritesUseCase
+        self.addFavoriteUseCase = addFavoriteUseCase
+        self.removeFavoriteUseCase = removeFavoriteUseCase
     }
     
-    func fetchFavorites() {
+    func fetchFavorites() async {
+        isLoading = true
+        error = nil
         do {
-            self.favorites = try self.fetchFavoritesUseCase.execute()
+            self.favorites = try await self.fetchFavoritesUseCase.execute()
         } catch {
             self.error = error
         }
+        isLoading = false
     }
     
-    func toggleFavorite(_ location: LocationModel) {
+    func toggleFavorite(_ location: LocationModel) async {
+        isLoading = true
+        error = nil
         do {
             if let favorite = self.favorites.first(where: { $0.id == location.id }) {
-                try self.removeFavoritesUseCase.execute(favorite)
+                try await self.removeFavoriteUseCase.execute(favorite)
                 if let index = favorites.firstIndex(of: favorite) {
                     self.favorites.remove(at: index)
-                } else {
-                    self.fetchFavorites()
                 }
             } else {
-                try self.addFavoritesUseCase.execute(location)
+                try await self.addFavoriteUseCase.execute(location)
                 self.favorites.append(location)
             }
         } catch {
             self.error = error
         }
+        isLoading = false
     }
     
     func isFavorite(_ location: LocationModel) -> Bool {
         self.favorites.contains { $0.id == location.id }
     }
-    
 }

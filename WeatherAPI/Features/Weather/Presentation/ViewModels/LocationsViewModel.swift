@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 @MainActor
 class LocationsViewModel: ObservableObject {
@@ -16,21 +15,21 @@ class LocationsViewModel: ObservableObject {
     @Published var searchQuery: String = ""
 
     private let fetchLocationsUseCase: FetchLocationsUseCase
-    private var cancellables = Set<AnyCancellable>()
 
-    init(fetchLocationsUseCase: FetchLocationsUseCase = FetchLocationsUseCase()) {
+    init(fetchLocationsUseCase: FetchLocationsUseCase) {
         self.fetchLocationsUseCase = fetchLocationsUseCase
     }
 
     func fetchLocations(query: String) async {
         isLoading = true
-        defer { isLoading = false }
+        error = nil
         do {
-            error = nil
-            locations = try await fetchLocationsUseCase.execute(query: query)
+            let fetchedLocations = try await fetchLocationsUseCase.execute(query: query)
+            locations = fetchedLocations
         } catch {
             self.error = error
         }
+        isLoading = false
     }
     
 }

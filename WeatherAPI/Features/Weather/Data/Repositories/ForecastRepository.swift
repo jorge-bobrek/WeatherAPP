@@ -8,7 +8,7 @@
 class ForecastRepository: AnyForecastRepository {
     private let networkService: AnyNetworkService
     
-    init(networkService: NetworkService = NetworkService.shared) {
+    init(networkService: AnyNetworkService) {
         self.networkService = networkService
     }
 

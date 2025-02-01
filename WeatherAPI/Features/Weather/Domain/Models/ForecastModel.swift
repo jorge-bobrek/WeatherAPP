@@ -7,32 +7,47 @@
 
 import Foundation
 
-struct WeatherModel: Codable {
+struct WeatherModel: Codable, Equatable {
     let forecast: WeatherForecastModel
 }
 
-struct WeatherForecastModel: Codable {
-    let forecastday: [WeatherForecastDayModel] 
+struct WeatherForecastModel: Codable, Equatable {
+    let forecastday: [WeatherForecastDayModel]
 }
 
-struct WeatherForecastDayModel: Codable, Hashable {
+struct WeatherForecastDayModel: Codable, Hashable, Equatable {
     let date: String
     let day: ForecastDayModel
 }
 
-struct ForecastDayModel: Codable, Hashable {
-    let avgtempC: Double
+struct ForecastDayModel: Codable, Hashable, Equatable {
+    let avgTempC: Double
     let condition: WeatherConditionModel
+
+    private enum CodingKeys: String, CodingKey {
+        case avgTempC = "avgtemp_c"
+        case condition
+    }
 }
 
-struct WeatherConditionModel: Codable, Hashable {
+struct WeatherConditionModel: Codable, Hashable, Equatable {
     let text: String
     let icon: String
     
-    init(from decoder: any Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.text = try container.decode(String.self, forKey: .text)
-        let url = try container.decode(String.self, forKey: .icon)
-        self.icon = "https:" + url.replacingOccurrences(of: "64x64", with: "128x128")
+        let rawIconURL = try container.decode(String.self, forKey: .icon)
+        self.icon = WeatherConditionModel.transformIconURL(rawIconURL)
+    }
+
+    private static func transformIconURL(_ rawURL: String) -> String {
+        let sanitizedURL = rawURL.replacingOccurrences(of: "64x64", with: "128x128")
+        return "https:\(sanitizedURL)"
+    }
+
+    init(text: String, icon: String) {
+        self.text = text
+        self.icon = icon
     }
 }

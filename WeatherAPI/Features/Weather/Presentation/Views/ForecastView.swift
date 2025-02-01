@@ -25,7 +25,7 @@ struct ForecastView: View {
                     VStack {
                         Text(DateUtils.formatDateString(forecast.date))
                             .font(.headline)
-                        Text(String(format: "%.1f°C", forecast.day.avgtempC))
+                        Text(String(format: "%.1f°C", forecast.day.avgTempC))
                             .font(.title)
                         KFImage(URL(string: forecast.day.condition.icon)!)
                             .resizable()
@@ -49,7 +49,7 @@ struct ForecastView: View {
         }.toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    favoritesStore.toggleFavorite(location)
+                    Task { await favoritesStore.toggleFavorite(location) }
                 } label: {
                     Image(systemName: favoritesStore.isFavorite(location) ? "star.fill" : "star")
                         .foregroundColor(.yellow)

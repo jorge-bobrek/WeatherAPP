@@ -8,7 +8,7 @@
 class FetchForecastUseCase {
     private let repository: AnyForecastRepository
 
-    init(repository: AnyForecastRepository = ForecastRepository()) {
+    init(repository: AnyForecastRepository) {
         self.repository = repository
     }
 

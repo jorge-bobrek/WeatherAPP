@@ -15,16 +15,16 @@ class ForecastViewModel: ObservableObject {
 
     private let fetchForecastUseCase: FetchForecastUseCase
 
-    init(fetchForecastUseCase: FetchForecastUseCase = FetchForecastUseCase()) {
+    init(fetchForecastUseCase: FetchForecastUseCase) {
         self.fetchForecastUseCase = fetchForecastUseCase
     }
 
     func fetchForecast(for location: LocationModel, days: Int) async {
         isLoading = true
-        weather = nil
+        error = nil
         do {
-            weather = try await fetchForecastUseCase.execute(for: location, days: days)
-            error = nil
+            let fetchedWeather = try await fetchForecastUseCase.execute(for: location, days: days)
+            weather = fetchedWeather
         } catch {
             self.error = error
         }
