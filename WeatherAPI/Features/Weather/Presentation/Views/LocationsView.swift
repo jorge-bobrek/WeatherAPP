@@ -19,6 +19,7 @@ struct LocationsView: View {
                         await viewModel.fetchLocations(query: newValue)
                     }
                 }
+                .accessibilityIdentifier("searchBar")
             if viewModel.isLoading {
                 Spacer()
                 ProgressView("Cargando...")

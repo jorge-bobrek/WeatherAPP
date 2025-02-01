@@ -9,13 +9,21 @@ import SwiftUI
 
 @main
 struct WeatherAPIApp: App {
-    let dependencyContainer = DependencyContainer()
+    let dependencyContainer: DependencyContainer
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.dependencyContainer, dependencyContainer)
                 .environmentObject(dependencyContainer.makeFavoritesStore())
+        }
+    }
+    
+    init() {
+        if ProcessInfo.processInfo.arguments.contains("--testing") {
+            self.dependencyContainer = DependencyContainer(locationsRepository: MockLocationsRepository(), favoritesRepository: MockFavoritesRepository(), forecastRepository: MockForecastRepository())
+        } else {
+            self.dependencyContainer = DependencyContainer()
         }
     }
 }

@@ -34,12 +34,15 @@ struct LocationListView: View {
                                 Image(systemName: favoritesStore.isFavorite(location) ? "star.fill" : "star")
                                     .foregroundColor(.yellow)
                             }
+                            .accessibilityIdentifier("favoriteButton_\(location.id)")
                         }
                         Divider()
                     }
                 }
+                .accessibilityIdentifier("locationRow_\(location.id)")
             }
         }
+        .accessibilityIdentifier("locationList")
         .background(
             NavigationLink(
                 destination: Group {

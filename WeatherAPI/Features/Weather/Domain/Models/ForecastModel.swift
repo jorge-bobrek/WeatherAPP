@@ -48,6 +48,6 @@ struct WeatherConditionModel: Codable, Hashable, Equatable {
 
     init(text: String, icon: String) {
         self.text = text
-        self.icon = icon
+        self.icon = WeatherConditionModel.transformIconURL(icon)
     }
 }

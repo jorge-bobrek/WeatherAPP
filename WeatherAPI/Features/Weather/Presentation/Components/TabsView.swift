@@ -37,13 +37,16 @@ struct TabsView<Content: View>: View {
                                     .resizable()
                                     .frame(width: 24, height: 24)
                                     .foregroundColor(selectedTab == index ? .blue : .gray)
+                                    .accessibilityIdentifier("tabIcon_\(index)")
                                 Text(tabs[index].title)
                                     .font(.caption)
                                     .foregroundColor(selectedTab == index ? .blue : .gray)
+                                    .accessibilityIdentifier("tabLabel_\(index)")
                             }
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 8)
                         }
+                        .accessibilityIdentifier("tabButton_\(index)")
                     }
                 }
                 .padding(.horizontal)

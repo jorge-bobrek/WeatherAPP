@@ -24,6 +24,7 @@ struct CardCarouselView<T: Hashable, Content: View>: View {
             ForEach(Array(items.enumerated()), id: \.offset) { index, item in
                 ZStack {
                     content(item)
+                        .accessibilityIdentifier("carouselItem_\(index)")
                 }
                 .padding()
                 .scaleEffect(1.0 - abs(distance(index)) * 0.2)

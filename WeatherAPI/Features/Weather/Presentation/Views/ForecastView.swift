@@ -54,6 +54,7 @@ struct ForecastView: View {
                     Image(systemName: favoritesStore.isFavorite(location) ? "star.fill" : "star")
                         .foregroundColor(.yellow)
                 }
+                .accessibilityIdentifier("favoriteButton_\(location.id)")
             }
         }
         .navigationBarTitle(location.name, displayMode: .large)
