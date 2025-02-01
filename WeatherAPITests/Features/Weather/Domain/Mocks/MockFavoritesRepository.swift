@@ -1,0 +1,35 @@
+//
+//  MockFavoritesRepository.swift
+//  WeatherAPI
+//
+//  Created by Jorge Bobrek on 31/01/25.
+//
+
+@testable import WeatherAPI
+
+class MockFavoritesRepository: AnyFavoritesRepository {
+    var favorites: [LocationModel] = []
+    var addedFavorites: [LocationModel] = []
+    var shouldThrowError = false
+
+    func fetchFavorites() async throws -> [LocationModel] {
+        if shouldThrowError {
+            throw MockError.someError
+        }
+        return favorites
+    }
+
+    func addFavorite(_ location: LocationModel) async throws {
+        if shouldThrowError {
+            throw MockError.someError
+        }
+        addedFavorites.append(location)
+    }
+
+    func removeFavorite(_ location: LocationModel) async throws {
+        if shouldThrowError {
+            throw MockError.someError
+        }
+        favorites.removeAll { $0.id == location.id }
+    }
+}
