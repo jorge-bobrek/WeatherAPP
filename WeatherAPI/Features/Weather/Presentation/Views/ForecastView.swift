@@ -40,7 +40,7 @@ struct ForecastView: View {
                     .padding()
                     .background(Color(.systemBackground))
                     .cornerRadius(10)
-                    .shadow(radius: 2)
+                    .shadow(color: Color(.secondaryLabel), radius: 3)
                 }
                 .padding()
                 
@@ -57,7 +57,7 @@ struct ForecastView: View {
                 .accessibilityIdentifier("favoriteButton_\(location.id)")
             }
         }
-        .navigationBarTitle(location.name, displayMode: .large)
+        .navigationBarTitle(location.name, displayMode: .inline)
         .onAppear {
             Task {
                 await viewModel.fetchForecast(for: location, days: 3)

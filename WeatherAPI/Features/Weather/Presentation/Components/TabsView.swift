@@ -28,9 +28,7 @@ struct TabsView<Content: View>: View {
                 HStack(spacing: 0) {
                     ForEach(tabs.indices, id: \.self) { index in
                         Button {
-                            withAnimation(.bouncy(duration: 0.3, extraBounce: 0.2)) {
-                                selectedTab = index
-                            }
+                            selectedTab = index
                         } label: {
                             VStack(spacing: 4) {
                                 Image(systemName: tabs[index].icon)
@@ -51,6 +49,7 @@ struct TabsView<Content: View>: View {
                 }
                 .padding(.horizontal)
             }
+            .navigationBarTitle(tabs[selectedTab].title, displayMode: .inline)
             .background(Color(.secondarySystemBackground).edgesIgnoringSafeArea(.bottom))
             .ignoresSafeArea(.container)
         }
